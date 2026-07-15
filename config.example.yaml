@@ -1,0 +1,29 @@
+# youtube digest configuration
+
+channels:
+  - "https://www.youtube.com/@ThePrimeTimeagen"
+  - "https://www.youtube.com/@mehulmpt"
+  - "https://www.youtube.com/@t3dotgg"
+  - "https://www.youtube.com/@LowLevelTV"
+
+max_channels: 10
+
+summary:
+  word_limit: 50
+
+comments:
+  enabled: false
+  top_n: 10
+  order: relevance
+
+archive:
+  retention_days: 30
+
+llm:
+  provider: "gemini"
+  model: "gemini-3.1-flash-lite"
+
+telegram:
+  digest_enabled: true
+  status_enabled: true
+
