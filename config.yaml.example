@@ -16,6 +16,13 @@ comments:
   top_n: 10
   order: relevance
 
+schedule:
+    # Runs 3x/day (UTC). Adjust to your preferred local times.
+    # Cron format: minute hour day month day-of-week
+    - "0 0 * * *"   # 00:00 UTC
+    - "0 8 * * *"   # 08:00 UTC
+    - "0 16 * * *"  # 16:00 UTC
+
 archive:
   retention_days: 30
 
