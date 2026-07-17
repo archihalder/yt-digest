@@ -1,0 +1,16 @@
+[project]
+name = "yt-digest"
+version = "0.1.0"
+description = "An automated YouTube digest pipeline"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "python-dotenv",
+    "pyyaml",
+    "requests",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
