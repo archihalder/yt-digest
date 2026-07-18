@@ -1,5 +1,3 @@
-# youtube digest configuration
-
 channels:
   - "https://www.youtube.com/@ThePrimeTimeagen"
   - "https://www.youtube.com/@mehulmpt"
@@ -33,4 +31,3 @@ llm:
 telegram:
   digest_enabled: true
   status_enabled: true
-

@@ -1,6 +1,6 @@
 .env
 .venv
-config.yaml
 __pycache__/
 *.pyc
 .vscode/
+.pytest_cache/
