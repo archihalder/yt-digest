@@ -37,6 +37,11 @@ def load_config(config_path: Path = CONFIG_PATH, env_path: Path = ENV_PATH) -> C
         with open(config_path, "r", encoding="utf-8") as config_file:
             config_data = yaml.safe_load(config_file)
 
+        if config_data is None:
+            raise ConfigurationError(
+                "Configuration file is empty or contains no configuration"
+            )
+
     except FileNotFoundError as error:
         raise ConfigurationError(
             f"Configuration file not found: {config_path}"
@@ -72,14 +77,14 @@ def load_config(config_path: Path = CONFIG_PATH, env_path: Path = ENV_PATH) -> C
 
     normalized_channel_urls = []
 
-    for index, channel_url in enumerate(channel_urls):
+    for channel_url in channel_urls:
         if not isinstance(channel_url, str):
-            raise ConfigurationError(f"Channel url at index {index} must be a string")
+            raise ConfigurationError("Channel url must be a string")
 
         channel_url = channel_url.strip()
 
         if not channel_url:
-            raise ConfigurationError(f"Channel at index {index} must not be blank")
+            raise ConfigurationError("Channel url must not be blank")
 
         normalized_channel_urls.append(channel_url)
 
