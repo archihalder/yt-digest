@@ -1,6 +1,6 @@
 import pytest
-from src.clients import youtube_client
-from src.clients.youtube_client import ChannelInputError
+from src.clients.youtube import channel_input
+from src.clients.youtube.channel_input import ChannelInputError
 
 
 @pytest.mark.parametrize(
@@ -21,14 +21,14 @@ from src.clients.youtube_client import ChannelInputError
     ],
 )
 def test_canonical_url_returns_complete_handle(url, expected_url):
-    channel_url = youtube_client.extract_single_channel_handle(url)
+    channel_url = channel_input.extract_single_channel_handle(url)
     assert channel_url == expected_url
 
 
 def test_malformed_url_is_rejected():
     url = "https://www.[youtube.com/"
     with pytest.raises(ChannelInputError, match="URL is malformed"):
-        youtube_client.extract_single_channel_handle(url)
+        channel_input.extract_single_channel_handle(url)
 
 
 @pytest.mark.parametrize(
@@ -41,7 +41,7 @@ def test_malformed_url_is_rejected():
 )
 def test_url_credentials_and_ports_are_rejected(invalid_url, expected_error):
     with pytest.raises(ChannelInputError, match=expected_error):
-        youtube_client.extract_single_channel_handle(invalid_url)
+        channel_input.extract_single_channel_handle(invalid_url)
 
 
 @pytest.mark.parametrize(
@@ -54,7 +54,7 @@ def test_url_credentials_and_ports_are_rejected(invalid_url, expected_error):
 )
 def test_url_with_missing_https_scheme_is_rejected(invalid_url):
     with pytest.raises(ChannelInputError, match="URL scheme is not 'https'"):
-        youtube_client.extract_single_channel_handle(invalid_url)
+        channel_input.extract_single_channel_handle(invalid_url)
 
 
 @pytest.mark.parametrize(
@@ -67,7 +67,7 @@ def test_url_with_missing_https_scheme_is_rejected(invalid_url):
 )
 def test_url_hostname_other_than_youtube_is_rejected(invalid_url):
     with pytest.raises(ChannelInputError, match="URL host is not set to YouTube"):
-        youtube_client.extract_single_channel_handle(invalid_url)
+        channel_input.extract_single_channel_handle(invalid_url)
 
 
 @pytest.mark.parametrize(
@@ -93,7 +93,7 @@ def test_url_hostname_other_than_youtube_is_rejected(invalid_url):
 )
 def test_url_with_invalid_query_parameter_is_rejected(invalid_url, expected_error):
     with pytest.raises(ChannelInputError, match=expected_error):
-        youtube_client.extract_single_channel_handle(invalid_url)
+        channel_input.extract_single_channel_handle(invalid_url)
 
 
 @pytest.mark.parametrize(
@@ -122,13 +122,13 @@ def test_url_with_invalid_query_parameter_is_rejected(invalid_url, expected_erro
 )
 def test_url_with_invalid_path_is_rejected(invalid_url, expected_error):
     with pytest.raises(ChannelInputError, match=expected_error):
-        youtube_client.extract_single_channel_handle(invalid_url)
+        channel_input.extract_single_channel_handle(invalid_url)
 
 
 def test_url_with_fragment_is_rejected():
     url = "https://www.youtube.com/@test#test-fragment"
     with pytest.raises(ChannelInputError, match="URL fragment is not empty"):
-        youtube_client.extract_single_channel_handle(url)
+        channel_input.extract_single_channel_handle(url)
 
 
 def test_duplicate_handles_are_removed_and_order_is_preserved():
@@ -142,5 +142,5 @@ def test_duplicate_handles_are_removed_and_order_is_preserved():
 
     expected_handles = ["@Same", "@same"]
 
-    unique_handles = youtube_client.extract_unique_channel_handles(channel_urls)
+    unique_handles = channel_input.extract_unique_channel_handles(channel_urls)
     assert unique_handles == expected_handles

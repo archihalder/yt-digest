@@ -1,7 +1,6 @@
 import sys
 
-from src.clients import youtube_client as yc
-from src.clients.youtube_client import ChannelInputError
+from src.clients.youtube import channel_input, client
 from src.config import ConfigurationError, load_config
 
 
@@ -13,13 +12,13 @@ def main() -> int:
         return 1
 
     try:
-        channel_handles = yc.extract_unique_channel_handles(config.channel_urls)
-    except ChannelInputError as error:
+        handles = channel_input.extract_unique_channel_handles(config.channel_urls)
+    except channel_input.ChannelInputError as error:
         print(f"Channel Input Error: {error}", file=sys.stderr)
         return 1
 
-    youtube_data = yc.fetch_latest_videos(
-        channel_handles=channel_handles, api_key=config.youtube_api_key
+    youtube_data = client.fetch_latest_videos(
+        channel_handles=handles, api_key=config.youtube_api_key
     )
 
     for data in youtube_data:
